@@ -1,0 +1,633 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bonjour les ados ! | Apprendre le français</title>
+
+<style>
+:root {
+  --yellow: #FFCF56;
+  --coral: #FF8066;
+  --blue: #5CBCC5;
+  --cream: #F8F4E9;
+  --navy: #253A53;
+  --white: #FFFFFF;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  background: var(--cream);
+  color: var(--navy);
+  line-height: 1.6;
+}
+
+header {
+  background: var(--navy);
+  color: white;
+  padding: 18px 7%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.logo {
+  font-size: 23px;
+  font-weight: bold;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+nav button {
+  background: transparent;
+  color: white;
+  border: none;
+  padding: 9px 12px;
+  cursor: pointer;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+nav button:hover,
+nav button.active {
+  background: var(--yellow);
+  color: var(--navy);
+}
+
+.hero {
+  background: var(--yellow);
+  text-align: center;
+  padding: 65px 20px;
+}
+
+.hero h1 {
+  font-size: clamp(32px, 6vw, 48px);
+  margin-bottom: 12px;
+}
+
+.hero p {
+  font-size: 18px;
+  max-width: 600px;
+  margin: auto;
+}
+
+.hero .emoji {
+  font-size: 55px;
+  margin-bottom: 12px;
+}
+
+.cta {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 13px 25px;
+  background: var(--navy);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 45px 20px;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.section-title h2 {
+  font-size: 30px;
+}
+
+.section-title p {
+  color: #607080;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 20px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 5px 18px #253a5310;
+  transition: transform .2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card .emoji {
+  font-size: 45px;
+}
+
+.card h3 {
+  margin: 10px 0;
+}
+
+.card button {
+  background: var(--blue);
+  color: var(--navy);
+  border: none;
+  padding: 10px 18px;
+  border-radius: 20px;
+  margin-top: 15px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.panel {
+  display: none;
+}
+
+.panel.active {
+  display: block;
+  animation: appear .3s ease;
+}
+
+@keyframes appear {
+  from {opacity: 0; transform: translateY(8px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+.exercise {
+  background: white;
+  padding: 25px;
+  border-radius: 18px;
+  margin: 20px 0;
+}
+
+.exercise button,
+.action-button {
+  border: none;
+  background: var(--coral);
+  color: white;
+  border-radius: 20px;
+  padding: 11px 20px;
+  margin: 8px 5px 8px 0;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+input {
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 350px;
+  margin: 12px 0;
+  font-size: 16px;
+}
+
+.feedback {
+  font-weight: bold;
+  margin-top: 12px;
+}
+
+.word {
+  display: inline-block;
+  background: var(--yellow);
+  padding: 12px 20px;
+  margin: 6px;
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+.assistant {
+  background: white;
+  max-width: 650px;
+  margin: auto;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 5px 20px #253a5310;
+}
+
+.chat {
+  background: #f0f5f6;
+  padding: 15px;
+  border-radius: 12px;
+  margin: 12px 0;
+  white-space: pre-wrap;
+}
+
+footer {
+  background: var(--navy);
+  color: white;
+  text-align: center;
+  padding: 25px;
+  margin-top: 30px;
+}
+
+@media(max-width: 600px) {
+  header { justify-content: center; }
+  nav { justify-content: center; }
+  .hero { padding: 45px 15px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">🌟 Bonjour les ados !</div>
+  <nav>
+    <button class="active" onclick="showPage('accueil',this)">Accueil</button>
+    <button onclick="showPage('vocabulaire',this)">📚 Mots</button>
+    <button onclick="showPage('grammaire',this)">✏️ Grammaire</button>
+    <button onclick="showPage('communication',this)">💬 Communication</button>
+    <button onclick="showPage('jeux',this)">🎮 Jeux</button>
+    <button onclick="showPage('assistant',this)">🤖 Assistant IA</button>
+  </nav>
+</header>
+
+<!-- ACCUEIL -->
+<section id="accueil" class="panel active">
+  <div class="hero">
+    <div class="emoji">🇫🇷 🎉 📖</div>
+    <h1>Bienvenue dans ton espace français !</h1>
+    <p>Apprends le français en t'amusant. Découvre de nouveaux mots, joue, écoute et progresse chaque jour !</p>
+    <button class="cta" onclick="showPage('vocabulaire')">
+      Je commence !
+    </button>
+  </div>
+
+  <div class="container">
+    <div class="section-title">
+      <h2>Que veux-tu apprendre aujourd'hui ?</h2>
+      <p>Choisis une activité et amuse-toi !</p>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="emoji">📚</div>
+        <h3>Je découvre les mots</h3>
+        <p>Apprends du nouveau vocabulaire.</p>
+        <button onclick="showPage('vocabulaire')">Découvrir</button>
+      </div>
+
+      <div class="card">
+        <div class="emoji">✏️</div>
+        <h3>Je comprends</h3>
+        <p>Découvre la grammaire française.</p>
+        <button onclick="showPage('grammaire')">Apprendre</button>
+      </div>
+
+      <div class="card">
+        <div class="emoji">💬</div>
+        <h3>Je communique</h3>
+        <p>Apprends à parler de toi.</p>
+        <button onclick="showPage('communication')">Pratiquer</button>
+      </div>
+
+      <div class="card">
+        <div class="emoji">🎮</div>
+        <h3>Je joue</h3>
+        <p>Teste tes connaissances.</p>
+        <button onclick="showPage('jeux')">Jouer</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VOCABULAIRE -->
+<section id="vocabulaire" class="panel">
+  <div class="container">
+    <div class="section-title">
+      <h2>📚 Je découvre les mots</h2>
+      <p>Quelques mots utiles pour parler de soi.</p>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="emoji">👦</div>
+        <h3>Un garçon</h3>
+        <p>Un adolescent masculin.</p>
+      </div>
+      <div class="card">
+        <div class="emoji">👧</div>
+        <h3>Une fille</h3>
+        <p>Une adolescente.</p>
+      </div>
+      <div class="card">
+        <div class="emoji">🏫</div>
+        <h3>L'école</h3>
+        <p>Un lieu où l'on apprend.</p>
+      </div>
+      <div class="card">
+        <div class="emoji">⚽</div>
+        <h3>Le sport</h3>
+        <p>Une activité physique.</p>
+      </div>
+      <div class="card">
+        <div class="emoji">🎵</div>
+        <h3>La musique</h3>
+        <p>Une activité artistique.</p>
+      </div>
+      <div class="card">
+        <div class="emoji">📖</div>
+        <h3>Un livre</h3>
+        <p>Un objet pour lire.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GRAMMAIRE -->
+<section id="grammaire" class="panel">
+  <div class="container">
+    <div class="section-title">
+      <h2>✏️ Je comprends et je construis</h2>
+      <p>Découvrons le verbe ÊTRE.</p>
+    </div>
+
+    <div class="exercise">
+      <h3>Le verbe ÊTRE au présent</h3>
+      <p>Je suis</p>
+      <p>Tu es</p>
+      <p>Il / Elle est</p>
+      <p>Nous sommes</p>
+      <p>Vous êtes</p>
+      <p>Ils / Elles sont</p>
+    </div>
+
+    <div class="exercise">
+      <h3>À toi de jouer !</h3>
+      <p>Complète la phrase :</p>
+      <p><strong>Je _____ adolescent(e).</strong></p>
+      <input id="grammarAnswer" placeholder="Écris ta réponse">
+      <br>
+      <button onclick="checkGrammar()">Vérifier</button>
+      <p id="grammarFeedback" class="feedback"></p>
+    </div>
+  </div>
+</section>
+
+<!-- COMMUNICATION -->
+<section id="communication" class="panel">
+  <div class="container">
+    <div class="section-title">
+      <h2>💬 J'écoute et je communique</h2>
+      <p>Apprends à te présenter en français.</p>
+    </div>
+
+    <div class="exercise">
+      <h3>Comment se présenter ?</h3>
+      <p>Bonjour ! Je m'appelle Lina.</p>
+      <p>J'ai 14 ans.</p>
+      <p>J'habite à Phnom Penh.</p>
+      <p>J'aime la musique et le sport.</p>
+      <p>Enchantée !</p>
+    </div>
+
+    <div class="exercise">
+      <h3>Maintenant, présente-toi !</h3>
+      <label>Comment tu t'appelles ?</label><br>
+      <input id="studentName" placeholder="Ton prénom"><br>
+
+      <label>Quel âge as-tu ?</label><br>
+      <input id="studentAge" type="number" placeholder="Ton âge"><br>
+
+      <label>Qu'est-ce que tu aimes ?</label><br>
+      <input id="studentHobby" placeholder="Exemple : la musique"><br>
+
+      <button onclick="introduce()">Créer ma présentation</button>
+      <p id="presentation" class="feedback"></p>
+    </div>
+  </div>
+</section>
+
+<!-- JEUX -->
+<section id="jeux" class="panel">
+  <div class="container">
+    <div class="section-title">
+      <h2>🎮 Je joue et je relève des défis</h2>
+      <p>Un petit quiz pour tester tes connaissances !</p>
+    </div>
+
+    <div class="exercise">
+      <h3>Question 1</h3>
+      <p>Comment dit-on "Hello" en français ?</p>
+      <button onclick="answer(1,'Bonjour')">Bonjour</button>
+      <button onclick="answer(1,'Merci')">Merci</button>
+      <button onclick="answer(1,'Au revoir')">Au revoir</button>
+      <p id="result1" class="feedback"></p>
+    </div>
+
+    <div class="exercise">
+      <h3>Question 2</h3>
+      <p>Quel est le bon article : _____ école ?</p>
+      <button onclick="answer(2,'Le')">Le</button>
+      <button onclick="answer(2,'La')">La</button>
+      <button onclick="answer(2,'L')">L'</button>
+      <p id="result2" class="feedback"></p>
+    </div>
+
+    <div class="exercise">
+      <h3>Question 3</h3>
+      <p>Complète : Tu _____ 14 ans.</p>
+      <button onclick="answer(3,'es')">es</button>
+      <button onclick="answer(3,'as')">as</button>
+      <button onclick="answer(3,'est')">est</button>
+      <p id="result3" class="feedback"></p>
+    </div>
+
+    <div class="exercise">
+      <h3>⭐ Mon score</h3>
+      <p id="score">0 bonne réponse sur 3.</p>
+      <button onclick="resetQuiz()">Recommencer le quiz</button>
+    </div>
+  </div>
+</section>
+
+<!-- ASSISTANT -->
+<section id="assistant" class="panel">
+  <div class="container">
+    <div class="section-title">
+      <h2>🤖 Mon compagnon de français</h2>
+      <p>Pose une question et entraîne-toi !</p>
+    </div>
+
+    <div class="assistant">
+      <h3>👋 Bonjour ! Je suis ton assistant.</h3>
+      <div id="chat">
+        <div class="chat">
+          Bonjour ! 😊 Je peux t'aider à apprendre le français.
+          Pose-moi une question !
+        </div>
+      </div>
+
+      <input id="question" placeholder="Écris ta question ici...">
+      <button class="action-button" onclick="askAssistant()">Envoyer</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>🌟 Bonjour les ados !</p>
+  <p>Apprendre le français avec plaisir.</p>
+  <p>Un projet pédagogique de FLE – Niveau A1</p>
+</footer>
+
+<script>
+
+// NAVIGATION
+function showPage(page, button) {
+  document.querySelectorAll('.panel').forEach(p => {
+    p.classList.remove('active');
+  });
+
+  document.getElementById(page).classList.add('active');
+
+  document.querySelectorAll('nav button').forEach(b => {
+    b.classList.remove('active');
+  });
+
+  if (button) button.classList.add('active');
+  else {
+    const navButton = [...document.querySelectorAll('nav button')]
+      .find(b => b.getAttribute('onclick')?.includes("'" + page + "'"));
+    if (navButton) navButton.classList.add('active');
+  }
+
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// GRAMMAIRE
+function checkGrammar() {
+  const value = document.getElementById('grammarAnswer')
+    .value.trim().toLowerCase();
+
+  const feedback = document.getElementById('grammarFeedback');
+
+  if (value === 'suis') {
+    feedback.textContent = '🎉 Bravo ! Très bonne réponse !';
+    feedback.style.color = 'green';
+  } else {
+    feedback.textContent = '💡 Indice : Je ... Tu es ...';
+    feedback.style.color = '#d66b42';
+  }
+}
+
+// PRÉSENTATION
+function introduce() {
+  const name = document.getElementById('studentName').value.trim();
+  const age = document.getElementById('studentAge').value.trim();
+  const hobby = document.getElementById('studentHobby').value.trim();
+
+  if (!name || !age || !hobby) {
+    alert('Complète les trois informations !');
+    return;
+  }
+
+  document.getElementById('presentation').textContent =
+    `Bonjour ! Je m'appelle ${name}. J'ai ${age} ans. J'aime ${hobby}.`;
+}
+
+// QUIZ
+const answers = {
+  1: 'Bonjour',
+  2: "L",
+  3: 'as'
+};
+
+let score = 0;
+let completed = {};
+
+function answer(question, value) {
+  if (completed[question]) return;
+
+  const result = document.getElementById('result' + question);
+
+  if (value === answers[question]) {
+    result.textContent = '🎉 Bravo ! Bonne réponse !';
+    result.style.color = 'green';
+    score++;
+  } else {
+    result.textContent = '💡 Essaie encore !';
+    result.style.color = '#d66b42';
+  }
+
+  completed[question] = true;
+  document.getElementById('score').textContent =
+    score + ' bonne réponse(s) sur 3.';
+}
+
+function resetQuiz() {
+  score = 0;
+  completed = {};
+
+  for (let i = 1; i <= 3; i++) {
+    document.getElementById('result' + i).textContent = '';
+  }
+
+  document.getElementById('score').textContent =
+    '0 bonne réponse sur 3.';
+}
+
+// ASSISTANT PEDAGOGIQUE DE DEMONSTRATION
+function askAssistant() {
+  const input = document.getElementById('question');
+  const question = input.value.trim().toLowerCase();
+
+  if (!question) return;
+
+  const chat = document.getElementById('chat');
+
+  const userMessage = document.createElement('div');
+  userMessage.className = 'chat';
+  userMessage.textContent = '🧑 ' + input.value;
+  chat.appendChild(userMessage);
+
+  let response = '';
+
+  if (question.includes('être')) {
+    response = "Le verbe ÊTRE permet de présenter une personne. Exemple : Je suis élève. À toi : comment dis-tu « I am » en français ?";
+  } else if (question.includes('avoir')) {
+    response = "Le verbe AVOIR permet notamment de parler de son âge. Exemple : J'ai 14 ans. Peux-tu compléter : Tu ... 15 ans ?";
+  } else if (question.includes('bonjour') || question.includes('salut')) {
+    response = "Bonjour ! 😊 C'est une façon de saluer quelqu'un. À toi : comment dit-on au revoir ?";
+  } else if (question.includes('merci')) {
+    response = "On dit MERCI pour exprimer sa gratitude. Exemple : Merci beaucoup !";
+  } else if (question.includes('grammaire')) {
+    response = "La grammaire nous aide à construire des phrases correctes. Choisis un sujet et un verbe pour commencer !";
+  } else if (question.includes('bonjour')) {
+    response = "Bonjour ! Comment vas-tu aujourd'hui ?";
+  } else {
+    response = "Bonne question ! 😊 Peux-tu me donner un peu plus de détails ? Je vais t'aider à réfléchir. Essaie de construire une phrase simple en français !";
+  }
+
+  const botMessage = document.createElement('div');
+  botMessage.className = 'chat';
+  botMessage.textContent = '🤖 ' + response;
+  chat.appendChild(botMessage);
+
+  input.value = '';
+  chat.scrollTop = chat.scrollHeight;
+}
+
+</script>
+</body>
+</html>
